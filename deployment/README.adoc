@@ -1,0 +1,28 @@
+= Deployment
+
+== Usage
+
+* make the script executable:
+[source, bash]
+----
+chmod +x start_cpc.sh
+----
+
+* execute the File with sudo permissions:
+[source, bash]
+----
+sudo ./start_cpc.sh
+----
+
+== Result
+
+. At first installs the script everything that's needed.
+
+.. Download Docker (for DB)
+.. Get Postgres Docker Image
+.. Download nginx (for Frontend)
+
+. Then the latest cpc release gets downloaded
+. Setting up Frontend with nginx
+. Printing the current IP (needed to access the frontend from another PC in the same network)
+. Starting Backend
