@@ -107,6 +107,9 @@ if [ "$latest_version" != "$current_version" ] || [ -z "$current_version" ]; the
   chmod +x ./backend/src/src
   rm *.zip
 
+  echo "Moving the env file to the project root ... "
+  sudo mv ./backend/src/env/.env .
+
   echo "$latest_version" >.version
 else
   echo -e "\n-> Software is up to date"
@@ -136,6 +139,4 @@ echo "================================================"
 echo -e "\n================================================"
 echo "Starting the Backend ... "
 echo -e "================================================\n"
-sudo ./backend/src/src &
-
-sleep 3
+sudo ./backend/src/src
