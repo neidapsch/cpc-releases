@@ -108,7 +108,7 @@ if [ "$latest_version" != "$current_version" ] || [ -z "$current_version" ]; the
   rm *.zip
 
   echo "Moving the env file to the project root ... "
-  sudo mv ./backend/src/env/.env .
+  sudo mv -f ./backend/src/env  .
 
   echo "$latest_version" >.version
 else
