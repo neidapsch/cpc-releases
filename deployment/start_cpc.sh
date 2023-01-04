@@ -59,7 +59,6 @@ else
   docker run --name pgadmin -e PGADMIN_DEFAULT_EMAIL=neudorfer@duck.com -e PGADMIN_DEFAULT_PASSWORD=pgadmin -d -p 1234:1234 dpage/pgadmin4
 fi
 
-
 # Check if nginx is installed
 if ! [ -x "$(command -v nginx)" ]; then
   sudo apt-get update
@@ -108,7 +107,7 @@ if [ "$latest_version" != "$current_version" ] || [ -z "$current_version" ]; the
   rm *.zip
 
   echo "Moving the env file to the project root ... "
-  sudo mv -f ./backend/src/env  .
+  sudo mv -f ./backend/src/env .
 
   echo "$latest_version" >.version
 else
@@ -118,10 +117,29 @@ fi
 echo -e "\n================================================"
 echo "Setting up Frontend with nginx ... "
 echo -e "================================================\n"
+root_dir="/var/www/html"
+server_name="$(hostname -I | awk '{print $1}')"
+
 if [ -d "frontend" ]; then
   # Copy the frontend files to the nginx web root directory
   echo "* Copying frontend files to nginx web root..."
   cp -r frontend/dist/frontend/* /var/www/html/
+
+  # Create the configuration file
+  cat >"/etc/nginx/sites-available/$server_name" <<EOF
+server {
+    listen 80;
+    server_name $server_name;
+    root $root_dir;
+
+    location / {
+        try_files \$uri \$uri/ /index.html;
+    }
+}
+EOF
+
+  # Create a symbolic link to the configuration file
+  ln -s "/etc/nginx/sites-available/$server_name" "/etc/nginx/sites-enabled/"
 
   # Restart nginx to pick up the changes
   echo "* Restarting nginx..."
@@ -131,10 +149,8 @@ else
 fi
 
 echo -e "\n================================================"
-echo "IP address of this machine: $(hostname -I | awk '{print $1}')"
+echo "IP address of this machine: $server_name"
 echo "================================================"
-
-
 
 echo -e "\n================================================"
 echo "Starting the Backend ... "
