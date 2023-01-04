@@ -21,6 +21,11 @@ if ! [ -x "$(command -v docker)" ]; then
   echo "Docker is not installed. Installing Docker..."
   apt-get update
   apt-get install docker.io -y
+  echo "!! Docker installed."
+  echo "!! System needs to reboot in order to make sure Docker is running."
+  echo "!! The system is rebooting in 5 seconds."
+  sleep 5
+  sudo systemctl reboot
 else
   echo "* Docker is already installed"
 fi
@@ -158,4 +163,4 @@ echo "================================================"
 echo -e "\n================================================"
 echo "Starting the Backend ... "
 echo -e "================================================\n"
-#sudo ./backend/src/src
+sudo ./backend/src/src

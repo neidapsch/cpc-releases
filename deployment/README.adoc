@@ -14,6 +14,23 @@ chmod +x start_cpc.sh
 sudo ./start_cpc.sh
 ----
 
+== Autostart
+
+* this script instead of the normal script.
+* this will not only start the script but also make it autostart on boot.
+
+[source, bash]
+----
+chmod +x set-as-startup.sh
+----
+
+
+[source, bash]
+----
+sudo ./set-as-startup.sh
+----
+
+
 == Result
 
 . At first installs the script everything that's needed.
@@ -26,3 +43,28 @@ sudo ./start_cpc.sh
 . Setting up Frontend with nginx
 . Printing the current IP (needed to access the frontend from another PC in the same network)
 . Starting Backend
+
+
+== Want to see the output?
+
+
+* This is how you can view the logs of this service:
+[source, bash]
+----
+journalctl -u start_cpc.service
+----
+
+* If you want to view the logs in real-time as the service is starting up:
+[source, bash]
+----
+journalctl -f -u start_cpc.service
+----
+
+
+== How to restart service
+
+----
+systemctl restart start_cpc.service
+----
+
+
