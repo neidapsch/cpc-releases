@@ -38,15 +38,15 @@ fi
 if docker ps | grep -q 'postgres'; then
   echo "* Postgres container is already running"
 else
-  echo "Starting Postgres Docker container..."
+  echo "-> Starting Postgres Docker container..."
   docker run --name postgres -e POSTGRES_PASSWORD=postgres -d -p 5432:5432 postgres
 fi
 
 # Check if the pgadmin Docker image is already pulled
-if ! docker images | grep -q "pgadmin"; then
+if ! docker images | grep -q "dpage/pgadmin4"; then
   # Pull the pgadmin Docker image if it is not already pulled
   echo "pgadmin Docker image not found. Pulling image from Docker hub..."
-  docker pull pgadmin
+  docker pull dpage/pgadmin4
 else
   echo "* pgadmin Docker image already pulled"
 fi
@@ -55,8 +55,8 @@ fi
 if docker ps | grep -q 'pgadmin'; then
   echo "* pgadmin container is already running"
 else
-  echo "Starting pgadmin Docker container..."
-  docker run --name pgadmin -e PGADMIN_DEFAULT_EMAIL=neudorfer@duck.com -e PGADMIN_DEFAULT_PASSWORD=pgadmin -d -p 80:80 pgadmin
+  echo "-> Starting pgadmin Docker container..."
+  docker run --name pgadmin -e PGADMIN_DEFAULT_EMAIL=neudorfer@duck.com -e PGADMIN_DEFAULT_PASSWORD=pgadmin -d -p 1234:1234 dpage/pgadmin4
 fi
 
 
