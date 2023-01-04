@@ -138,7 +138,10 @@ server {
 }
 EOF
 
-  # Create a symbolic link to the configuration file
+  # Check if the symbolic link exists
+  if [ -L "/etc/nginx/sites-enabled/$server_name" ]; then
+    rm "/etc/nginx/sites-enabled/$server_name"
+  fi
   ln -s "/etc/nginx/sites-available/$server_name" "/etc/nginx/sites-enabled/"
 
   # Restart nginx to pick up the changes
@@ -155,4 +158,4 @@ echo "================================================"
 echo -e "\n================================================"
 echo "Starting the Backend ... "
 echo -e "================================================\n"
-sudo ./backend/src/src
+#sudo ./backend/src/src
